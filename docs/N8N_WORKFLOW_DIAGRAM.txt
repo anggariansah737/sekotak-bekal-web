@@ -1,0 +1,274 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║              n8n WORKFLOW - MULTI-DATE ORDER WEBHOOK HANDLER                   ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+INPUT
+─────
+{
+  "customerName": "John Doe",
+  "customerPhone": "6285648444086",
+  "orders": [
+    {
+      "deliveryDate": "2026-04-24",
+      "items": [
+        {"name": "Nasi Rendang", "quantity": 1, "price": 28000}
+      ],
+      "subtotal": 28000
+    },
+    {
+      "deliveryDate": "2026-04-25",
+      "items": [
+        {"name": "Ayam Goreng", "quantity": 2, "price": 35000}
+      ],
+      "subtotal": 70000
+    }
+  ],
+  "totalAmount": 98000,
+  "orderDate": "2026-04-24T10:30:00Z"
+}
+
+WORKFLOW FLOW
+─────────────
+
+         ┌──────────────────────────┐
+         │   1. Webhook Trigger     │
+         │  (Receives JSON payload) │
+         └────────────┬─────────────┘
+                      │
+                      ▼
+         ┌──────────────────────────┐
+         │  2. Parse Payload        │
+         │  (Code Node)             │
+         │  ✓ Extract fields        │
+         │  ✓ Normalize phone       │
+         │  ✓ Parse orders array    │
+         └────────────┬─────────────┘
+                      │
+          Output: {
+            customerName: "John Doe",
+            phone: "628..." (normalized),
+            orders: [...],
+            totalAmount: 98000,
+            orderCount: 2
+          }
+                      │
+                      ▼
+         ┌──────────────────────────┐
+         │  3. Loop Over Orders     │
+         │  (Execute For Each Node) │
+         │  Iteration Count: 2      │
+         └────────────┬─────────────┘
+                      │
+         ┌────────────┴────────────┐
+         │ Iteration 1             │ Iteration 2
+         │ (2026-04-24)            │ (2026-04-25)
+         ▼                         ▼
+    ┌─────────────┐          ┌─────────────┐
+    │Order Data:  │          │Order Data:  │
+    │- Date       │          │- Date       │
+    │- Items[]    │          │- Items[]    │
+    │- Subtotal   │          │- Subtotal   │
+    └──────┬──────┘          └──────┬──────┘
+           │                        │
+           ▼                        ▼
+    ┌──────────────────┐    ┌──────────────────┐
+    │4. Build Message  │    │4. Build Message  │
+    │(Code Node)       │    │(Code Node)       │
+    │✓ Format date     │    │✓ Format date     │
+    │✓ List items      │    │✓ List items      │
+    │✓ Show subtotal   │    │✓ Show subtotal   │
+    │✓ Check if last   │    │✓ Check if last   │
+    └──────┬───────────┘    └──────┬───────────┘
+           │                        │
+           ▼                        ▼
+    Message:                 Message:
+    "🍲 Pesanan...           "🍲 Pesanan...
+    📅 Pengiriman:           📅 Pengiriman:
+    Rabu, 24 April...        Kamis, 25 April...
+    Nasi Rendang ×1...       Ayam Goreng ×2...
+    Subtotal: 28.000...      Subtotal: 70.000...
+    Total: 98.000..."        Total: 98.000..."
+           │                        │
+           ▼                        ▼
+    ┌──────────────────┐    ┌──────────────────┐
+    │5. WAHA Send Text │    │5. WAHA Send Text │
+    │(WhatsApp)        │    │(WhatsApp)        │
+    │Phone: 628...     │    │Phone: 628...     │
+    │Message: ...      │    │Message: ...      │
+    │✓ Sent            │    │✓ Sent            │
+    └──────┬───────────┘    └──────┬───────────┘
+           │                        │
+           ▼                        ▼
+    ┌──────────────────┐    ┌──────────────────┐
+    │6. WAHA Send      │    │6. WAHA Send      │
+    │   Image (QRIS)   │    │   Image (QRIS)   │
+    │Phone: 628...     │    │Phone: 628...     │
+    │Image: QRIS.jpg   │    │Image: QRIS.jpg   │
+    │Caption: Scan...  │    │Caption: Scan...  │
+    │✓ Sent            │    │✓ Sent            │
+    └──────┬───────────┘    └──────┬───────────┘
+           │                        │
+           └────────────┬───────────┘
+                        │
+                        ▼
+         ┌──────────────────────────┐
+         │  7. Return Response       │
+         │  (Set Node)              │
+         │  {                       │
+         │    "success": true,      │
+         │    "message": "All...",  │
+         │    "ordersCount": 2      │
+         │  }                       │
+         └──────────────────────────┘
+
+OUTPUT
+──────
+✅ 2 WhatsApp messages sent (one per delivery date)
+✅ 2 QRIS images sent
+✅ Customer receives order confirmation with delivery dates
+✅ Each message shows correct items and subtotals
+✅ Total amount shown only on last message
+
+
+DETAILED NODE DESCRIPTIONS
+──────────────────────────
+
+┌─ Node 1: Webhook ─────────────────────────────────────────┐
+│ Type: Webhook Trigger                                     │
+│ Path: sekotak-order                                       │
+│ Listens for POST requests to /webhook/sekotak-order       │
+│ Response: {"success": true}                               │
+└───────────────────────────────────────────────────────────┘
+
+┌─ Node 2: Parse Payload ───────────────────────────────────┐
+│ Type: Code (JavaScript)                                   │
+│ Input: Raw webhook JSON body                              │
+│ Operations:                                               │
+│  • Extract customerName, customerPhone, orders, etc       │
+│  • Normalize phone: 0... → 62... format                   │
+│  • Count total orders                                     │
+│ Output: Structured object for next nodes                  │
+└───────────────────────────────────────────────────────────┘
+
+┌─ Node 3: Loop Over Orders ────────────────────────────────┐
+│ Type: Execute For Each                                    │
+│ Iterates: $.orders array                                  │
+│ Executes: Nodes 4, 5, 6 for each order                    │
+│ Loop variables: $loop.index, $loop.length, etc            │
+└───────────────────────────────────────────────────────────┘
+
+┌─ Node 4: Build Message ───────────────────────────────────┐
+│ Type: Code (JavaScript)                                   │
+│ For Each Order:                                           │
+│  • Format delivery date (Rabu, 24 April)                  │
+│  • Build menu list with prices                            │
+│  • Show subtotal                                          │
+│  • Check if last order: show total amount if yes          │
+│ Output: WhatsApp message text                             │
+└───────────────────────────────────────────────────────────┘
+
+┌─ Node 5: WAHA Send Text ──────────────────────────────────┐
+│ Type: WAHA (WhatsApp)                                     │
+│ Sends: Text message to customer phone                     │
+│ For Each Order: Sends message with delivery date details  │
+│ Connection: WhatsApp Business API via WAHA               │
+└───────────────────────────────────────────────────────────┘
+
+┌─ Node 6: WAHA Send Image ─────────────────────────────────┐
+│ Type: WAHA (WhatsApp)                                     │
+│ Sends: QRIS payment image                                 │
+│ For Each Order: Sends QRIS after text message             │
+│ Caption: "Scan untuk bayar"                               │
+└───────────────────────────────────────────────────────────┘
+
+┌─ Node 7: Return Response ─────────────────────────────────┐
+│ Type: Set (Variable)                                      │
+│ Sets: Final response values                               │
+│ Output: Webhook response with success status              │
+└───────────────────────────────────────────────────────────┘
+
+
+FLOW LOGIC DETAILS
+──────────────────
+
+SINGLE ORDER (orders.length = 1):
+  Input: 1 order with deliveryDate
+  → Loop executes 1 time
+  → 1 message sent with total amount
+  → 1 QRIS image sent
+
+MULTIPLE ORDERS (orders.length = 2+):
+  Input: N orders with different deliveryDates
+  → Loop executes N times
+  → N messages sent (1 per delivery date)
+  → Each message shows its own items/subtotal
+  → Only LAST message shows totalAmount
+  → N QRIS images sent
+
+MESSAGE FORMAT PER ORDER:
+  🍲 *Pesanan Dikonfirmasi*
+
+  Halo {customerName},
+
+  📅 *Pengiriman: {dayName}, {date} {month} 2026*
+
+  *Menu Pesanan:*
+  • {item.name} ×{item.quantity}
+    Rp {item.price}
+
+  *Subtotal*: Rp {subtotal}
+
+  [IF LAST ORDER]
+  💰 *Total Pembayaran*: Rp {totalAmount}
+  [END IF]
+
+  ✅ Tunjukkan QRIS di bawah untuk pembayaran.
+
+  Terima kasih! 🙏
+
+═══════════════════════════════════════════════════════════════════════════════
+
+EXAMPLE EXECUTION TRACE
+───────────────────────
+
+Input Webhook (2 orders):
+┌─ Order 1: 2026-04-24, Subtotal: 50.000
+└─ Order 2: 2026-04-25, Subtotal: 70.000
+   Total: 120.000
+
+Execution:
+
+1. Webhook receives JSON ✓
+2. Parse Payload extracts fields ✓
+   - customerName: "John"
+   - phone: "6285648444086"
+   - orders: [2 items]
+   - orderCount: 2
+
+3. Loop starts (index 0, length 2)
+   4a. Build Message for Order 1
+       "📅 Pengiriman: Rabu, 24 April"
+       "Subtotal: 50.000"
+       (No total, not last)
+   5a. Send Text message → ✓ WhatsApp sent
+   6a. Send QRIS image → ✓ QRIS sent
+
+4. Loop iteration 2 (index 1, length 2)
+   4b. Build Message for Order 2
+       "📅 Pengiriman: Kamis, 25 April"
+       "Subtotal: 70.000"
+       "💰 Total: 120.000" (IS last order)
+   5b. Send Text message → ✓ WhatsApp sent
+   6b. Send QRIS image → ✓ QRIS sent
+
+5. Loop ends
+6. Return Response {success: true, ordersCount: 2}
+
+Result:
+✅ Customer received 2 WhatsApp messages
+✅ Each message shows correct delivery date
+✅ Each message shows correct items
+✅ Total amount shown only on last message
+✅ QRIS images received
+
+═══════════════════════════════════════════════════════════════════════════════

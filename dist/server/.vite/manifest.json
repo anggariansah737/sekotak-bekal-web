@@ -1,0 +1,265 @@
+{
+  "%23tanstack-start-plugin-adapters": {
+    "file": "assets/__23tanstack-start-plugin-adapters-Cwee5PKy.js",
+    "name": "__23tanstack-start-plugin-adapters",
+    "src": "%23tanstack-start-plugin-adapters",
+    "isDynamicEntry": true
+  },
+  "/Users/angga/PROJECT/bekal-web/sekotak-bekal-web/src/styles.css": {
+    "file": "assets/styles-Cb-5LHoY.css",
+    "src": "/Users/angga/PROJECT/bekal-web/sekotak-bekal-web/src/styles.css"
+  },
+  "_BottomNav-C_UP7DrZ.js": {
+    "file": "assets/BottomNav-C_UP7DrZ.js",
+    "name": "BottomNav",
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_utils-D47OA262.js"
+    ]
+  },
+  "_CategoryBadge-BbcqYiSA.js": {
+    "file": "assets/CategoryBadge-BbcqYiSA.js",
+    "name": "CategoryBadge",
+    "imports": [
+      "_utils-D47OA262.js",
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js"
+    ]
+  },
+  "_calendar-axCOvYGN.js": {
+    "file": "assets/calendar-axCOvYGN.js",
+    "name": "calendar",
+    "imports": [
+      "_utils-D47OA262.js"
+    ]
+  },
+  "_heart-B6-F0kDz.js": {
+    "file": "assets/heart-B6-F0kDz.js",
+    "name": "heart",
+    "imports": [
+      "_utils-D47OA262.js"
+    ]
+  },
+  "_leaf-BXin7ghQ.js": {
+    "file": "assets/leaf-BXin7ghQ.js",
+    "name": "leaf",
+    "imports": [
+      "_utils-D47OA262.js"
+    ]
+  },
+  "_minus-Y36Dm7X-.js": {
+    "file": "assets/minus-Y36Dm7X-.js",
+    "name": "minus",
+    "imports": [
+      "_utils-D47OA262.js"
+    ]
+  },
+  "_router-7dEjMhRs.js": {
+    "file": "assets/router-7dEjMhRs.js",
+    "name": "router",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js"
+    ],
+    "dynamicImports": [
+      "src/routes/profile.tsx?tsr-split=component",
+      "src/routes/orders.tsx?tsr-split=component",
+      "src/routes/cart.tsx?tsr-split=component",
+      "src/routes/auth.tsx?tsr-split=component",
+      "src/routes/index.tsx?tsr-split=component",
+      "src/routes/menu.$id.tsx?tsr-split=errorComponent",
+      "src/routes/menu.$id.tsx?tsr-split=notFoundComponent",
+      "src/routes/menu.$id.tsx?tsr-split=component"
+    ],
+    "assets": [
+      "assets/styles-Cb-5LHoY.css"
+    ]
+  },
+  "_use-cart-CLUq2Nr6.js": {
+    "file": "assets/use-cart-CLUq2Nr6.js",
+    "name": "use-cart",
+    "imports": [
+      "_utils-D47OA262.js",
+      "_worker-entry-BvBN2c8W.js"
+    ]
+  },
+  "_utils-D47OA262.js": {
+    "file": "assets/utils-D47OA262.js",
+    "name": "utils",
+    "imports": [
+      "_worker-entry-BvBN2c8W.js"
+    ]
+  },
+  "_worker-entry-BvBN2c8W.js": {
+    "file": "assets/worker-entry-BvBN2c8W.js",
+    "name": "worker-entry",
+    "dynamicImports": [
+      "tanstack-start-manifest:v",
+      "_router-7dEjMhRs.js",
+      "node_modules/@tanstack/react-start/dist/plugin/default-entry/start.ts",
+      "%23tanstack-start-plugin-adapters"
+    ]
+  },
+  "node_modules/@tanstack/react-start/dist/plugin/default-entry/start.ts": {
+    "file": "assets/start-HYkvq4Ni.js",
+    "name": "start",
+    "src": "node_modules/@tanstack/react-start/dist/plugin/default-entry/start.ts",
+    "isDynamicEntry": true
+  },
+  "src/assets/auth-hero.jpg": {
+    "file": "assets/auth-hero-CpI7CDuG.jpg",
+    "src": "src/assets/auth-hero.jpg"
+  },
+  "src/assets/ayam-bakar-madu.jpg": {
+    "file": "assets/ayam-bakar-madu-BhChHWeB.jpg",
+    "src": "src/assets/ayam-bakar-madu.jpg"
+  },
+  "src/assets/bento-anak.jpg": {
+    "file": "assets/bento-anak-DkWUSRBh.jpg",
+    "src": "src/assets/bento-anak.jpg"
+  },
+  "src/assets/ikan-jimbaran.jpg": {
+    "file": "assets/ikan-jimbaran-DDuHy0TK.jpg",
+    "src": "src/assets/ikan-jimbaran.jpg"
+  },
+  "src/assets/nasi-balado.jpg": {
+    "file": "assets/nasi-balado-88avU1Xh.jpg",
+    "src": "src/assets/nasi-balado.jpg"
+  },
+  "src/assets/nasi-campur.jpg": {
+    "file": "assets/nasi-campur-CEeDFBX3.jpg",
+    "src": "src/assets/nasi-campur.jpg"
+  },
+  "src/assets/salad-segar.jpg": {
+    "file": "assets/salad-segar-dQZpq_L3.jpg",
+    "src": "src/assets/salad-segar.jpg"
+  },
+  "src/routes/auth.tsx?tsr-split=component": {
+    "file": "assets/auth-Bwbji8X6.js",
+    "name": "auth",
+    "src": "src/routes/auth.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_utils-D47OA262.js",
+      "_leaf-BXin7ghQ.js"
+    ],
+    "assets": [
+      "assets/auth-hero-CpI7CDuG.jpg"
+    ]
+  },
+  "src/routes/cart.tsx?tsr-split=component": {
+    "file": "assets/cart-F6VyAj9v.js",
+    "name": "cart",
+    "src": "src/routes/cart.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_use-cart-CLUq2Nr6.js",
+      "_utils-D47OA262.js",
+      "_CategoryBadge-BbcqYiSA.js",
+      "_calendar-axCOvYGN.js",
+      "_minus-Y36Dm7X-.js"
+    ]
+  },
+  "src/routes/index.tsx?tsr-split=component": {
+    "file": "assets/index-BUZiiOFc.js",
+    "name": "index",
+    "src": "src/routes/index.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_CategoryBadge-BbcqYiSA.js",
+      "_utils-D47OA262.js",
+      "_use-cart-CLUq2Nr6.js",
+      "_BottomNav-C_UP7DrZ.js"
+    ]
+  },
+  "src/routes/menu.$id.tsx?tsr-split=component": {
+    "file": "assets/menu._id-9amhRRBK.js",
+    "name": "menu._id",
+    "src": "src/routes/menu.$id.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_use-cart-CLUq2Nr6.js",
+      "_utils-D47OA262.js",
+      "_heart-B6-F0kDz.js",
+      "_leaf-BXin7ghQ.js",
+      "_minus-Y36Dm7X-.js"
+    ],
+    "assets": [
+      "assets/ayam-bakar-madu-BhChHWeB.jpg",
+      "assets/bento-anak-DkWUSRBh.jpg",
+      "assets/nasi-balado-88avU1Xh.jpg",
+      "assets/ikan-jimbaran-DDuHy0TK.jpg",
+      "assets/nasi-campur-CEeDFBX3.jpg",
+      "assets/salad-segar-dQZpq_L3.jpg"
+    ]
+  },
+  "src/routes/menu.$id.tsx?tsr-split=errorComponent": {
+    "file": "assets/menu._id-C86X2fKQ.js",
+    "name": "menu._id",
+    "src": "src/routes/menu.$id.tsx?tsr-split=errorComponent",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js"
+    ]
+  },
+  "src/routes/menu.$id.tsx?tsr-split=notFoundComponent": {
+    "file": "assets/menu._id-Cbw83bu7.js",
+    "name": "menu._id",
+    "src": "src/routes/menu.$id.tsx?tsr-split=notFoundComponent",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js"
+    ]
+  },
+  "src/routes/orders.tsx?tsr-split=component": {
+    "file": "assets/orders-CcjdaH62.js",
+    "name": "orders",
+    "src": "src/routes/orders.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_utils-D47OA262.js",
+      "_BottomNav-C_UP7DrZ.js",
+      "_calendar-axCOvYGN.js"
+    ]
+  },
+  "src/routes/profile.tsx?tsr-split=component": {
+    "file": "assets/profile-nBIWi1Q0.js",
+    "name": "profile",
+    "src": "src/routes/profile.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js",
+      "_router-7dEjMhRs.js",
+      "_BottomNav-C_UP7DrZ.js",
+      "_utils-D47OA262.js",
+      "_heart-B6-F0kDz.js"
+    ]
+  },
+  "tanstack-start-manifest:v": {
+    "file": "assets/_tanstack-start-manifest_v-BEXsvE8t.js",
+    "name": "_tanstack-start-manifest_v",
+    "src": "tanstack-start-manifest:v",
+    "isDynamicEntry": true
+  },
+  "virtual:cloudflare/worker-entry": {
+    "file": "index.js",
+    "name": "index",
+    "src": "virtual:cloudflare/worker-entry",
+    "isEntry": true,
+    "imports": [
+      "_worker-entry-BvBN2c8W.js"
+    ]
+  }
+}
