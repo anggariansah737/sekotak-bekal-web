@@ -1,23 +1,12 @@
-import { c as createLucideIcon, a as cn } from "./utils-DJdi3s0n.js";
-import { r as reactExports, U as jsxRuntimeExports } from "./worker-entry-CDJnMFZv.js";
-import { s as supabase } from "./router-DBnI-kIc.js";
-const __iconNode = [
-  ["path", { d: "M16 10a4 4 0 0 1-8 0", key: "1ltviw" }],
-  ["path", { d: "M3.103 6.034h17.794", key: "awc11p" }],
-  [
-    "path",
-    {
-      d: "M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z",
-      key: "o988cm"
-    }
-  ]
-];
-const ShoppingBag = createLucideIcon("shopping-bag", __iconNode);
+import { useState, useEffect } from "react";
+import { s as supabase } from "./router-VI3ubcTf.js";
+import { jsx } from "react/jsx-runtime";
+import { c as cn } from "./utils-FX9JXj3v.js";
 function useMenu() {
-  const [items, setItems] = reactExports.useState([]);
-  const [loading, setLoading] = reactExports.useState(true);
-  const [error, setError] = reactExports.useState(null);
-  reactExports.useEffect(() => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
     supabase.from("menu_items").select("*").eq("is_available", true).order("category").then(({ data, error: err }) => {
       if (err) setError(err.message);
       else setItems(data ?? []);
@@ -27,10 +16,10 @@ function useMenu() {
   return { items, loading, error };
 }
 function useMenuByDate(date) {
-  const [items, setItems] = reactExports.useState([]);
-  const [loading, setLoading] = reactExports.useState(true);
-  const [error, setError] = reactExports.useState(null);
-  reactExports.useEffect(() => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
     supabase.from("menu_schedules").select("*, menu_items(*)").eq("available_date", date).then(({ data, error: err }) => {
       if (err) {
         setError(err.message);
@@ -55,7 +44,7 @@ function CategoryBadge({
   className
 }) {
   const style = styles[category] || "bg-muted text-foreground";
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     "span",
     {
       className: cn(
@@ -69,7 +58,6 @@ function CategoryBadge({
 }
 export {
   CategoryBadge as C,
-  ShoppingBag as S,
   useMenuByDate as a,
   useMenu as u
 };

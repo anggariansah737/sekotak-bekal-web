@@ -1,5 +1,25 @@
 {
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "framework": null
+  "framework": null,
+  "outputDirectory": "dist/client",
+  "functions": {
+    "api/[[...route]].js": {
+      "includeFiles": "dist/server/**"
+    }
+  },
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/[[...route]]"
+    }
+  ]
 }

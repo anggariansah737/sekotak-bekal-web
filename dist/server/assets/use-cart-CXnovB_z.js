@@ -1,10 +1,4 @@
-import { c as createLucideIcon } from "./utils-DJdi3s0n.js";
-import { r as reactExports } from "./worker-entry-CDJnMFZv.js";
-const __iconNode = [
-  ["path", { d: "M5 12h14", key: "1ays0h" }],
-  ["path", { d: "M12 5v14", key: "s699le" }]
-];
-const Plus = createLucideIcon("plus", __iconNode);
+import { useState, useEffect, useCallback } from "react";
 const KEY = "sekotal-cart";
 const read = () => {
   if (typeof window === "undefined") return [];
@@ -21,8 +15,8 @@ const write = (lines) => {
   window.dispatchEvent(new Event("sekotal-cart-change"));
 };
 function useCart() {
-  const [lines, setLines] = reactExports.useState([]);
-  reactExports.useEffect(() => {
+  const [lines, setLines] = useState([]);
+  useEffect(() => {
     setLines(read());
     const onChange = () => setLines(read());
     window.addEventListener("sekotal-cart-change", onChange);
@@ -32,7 +26,7 @@ function useCart() {
       window.removeEventListener("storage", onChange);
     };
   }, []);
-  const add = reactExports.useCallback((id, date, qty = 1) => {
+  const add = useCallback((id, date, qty = 1) => {
     const current = read();
     const found = current.find((l) => l.id === id && l.date === date);
     let next;
@@ -45,17 +39,17 @@ function useCart() {
     }
     write(next);
   }, []);
-  const setQty = reactExports.useCallback((id, date, qty) => {
+  const setQty = useCallback((id, date, qty) => {
     const current = read();
     const next = qty <= 0 ? current.filter((l) => !(l.id === id && l.date === date)) : current.map(
       (l) => l.id === id && l.date === date ? { ...l, qty } : l
     );
     write(next);
   }, []);
-  const remove = reactExports.useCallback((id, date) => {
+  const remove = useCallback((id, date) => {
     write(read().filter((l) => !(l.id === id && l.date === date)));
   }, []);
-  const clear = reactExports.useCallback(() => write([]), []);
+  const clear = useCallback(() => write([]), []);
   const totalItems = lines.reduce((s, l) => s + l.qty, 0);
   const groupByDate = () => {
     const groups = /* @__PURE__ */ new Map();
@@ -92,7 +86,6 @@ function useCartWithItems(menuItems) {
   return { lines, items, totalItems, totalPrice, groupByDate, itemsByDate };
 }
 export {
-  Plus as P,
   useCartWithItems as a,
   useCart as u
 };
