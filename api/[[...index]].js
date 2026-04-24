@@ -1,29 +1,25 @@
 export default async function handler(req, res) {
-  const { default: serverHandler } = await import('../dist/server/index.js');
-
   try {
-    const url = new URL(req.url, `http://${req.headers.host}`);
+    const { default: serverHandler } = await import('../dist/server/index.js');
+
+    const url = `http://${req.headers.host}${req.url}`;
 
     const response = await serverHandler.fetch(
-      new Request(url.href, {
+      new Request(url, {
         method: req.method,
-        headers: req.headers,
-        body: ['POST', 'PUT', 'PATCH'].includes(req.method)
-          ? JSON.stringify(req.body)
-          : undefined,
+        headers: new Headers(req.headers),
+        body: ['POST', 'PUT', 'PATCH'].includes(req.method) ? req : undefined,
       })
     );
-
-    res.status(response.status);
 
     for (const [key, value] of response.headers.entries()) {
       res.setHeader(key, value);
     }
 
-    const text = await response.text();
-    res.send(text);
+    res.status(response.status);
+    res.send(await response.text());
   } catch (error) {
-    console.error('API Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
   }
 }
