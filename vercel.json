@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/server",
+  "framework": null,
+  "serverless_functions_directory": "api",
+  "installCommand": "npm install"
+}
